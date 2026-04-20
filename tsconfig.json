@@ -18,8 +18,16 @@
         "name": "next"
       }
     ],
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/public/*": ["public/*"],
+      "@/types/*": ["types/*"],
+      "@/templates/*": ["components/templates/*"],
+      "@/layout/*": ["components/layout/*"],
+      "@/modules/*": ["components/modules/*"],
+      "@/elements/*": ["components/elements/*"],
+      "@/api/*": ["app/api/*"],
     }
   },
   "include": [
