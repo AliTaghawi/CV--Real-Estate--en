@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Vazirmatn from "@/public/fonts/fonts";
 import "./globals.css";
 import Layout from "@/layout/Layout";
+import ModeProvider from "@/providers/ModeProvider";
 
 export const metadata: Metadata = {
   title: "Real Estate | CV project",
@@ -14,11 +15,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${Vazirmatn.className} dark:bg-zinc-950 dark:text-zinc-100 h-full`}>
+    <html
+      lang="en"
+      className={`${Vazirmatn.className} dark:bg-zinc-950 dark:text-zinc-100 h-full`}
+      suppressHydrationWarning
+    >
       <body className="h-full flex flex-col items-start gap-1 justify-between">
-        <Layout>
-          {children}
-        </Layout>
+        <ModeProvider>
+          <Layout>{children}</Layout>
+        </ModeProvider>
       </body>
     </html>
   );

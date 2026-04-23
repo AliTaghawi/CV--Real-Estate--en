@@ -23,6 +23,7 @@
     "paths": {
       "@/public/*": ["public/*"],
       "@/types/*": ["types/*"],
+      "@/providers/*": ["providers/*"],
       "@/templates/*": ["components/templates/*"],
       "@/layout/*": ["components/layout/*"],
       "@/modules/*": ["components/modules/*"],
