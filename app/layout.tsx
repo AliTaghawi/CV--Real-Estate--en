@@ -14,8 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${Vazirmatn.className}`}>
-      <body>
+    <html lang="en" className={`${Vazirmatn.className} dark:bg-zinc-950 dark:text-zinc-100 h-full`}>
+      <body className="h-full flex flex-col items-start gap-1 justify-between">
         <Layout>
           {children}
         </Layout>

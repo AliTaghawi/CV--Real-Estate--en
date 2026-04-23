@@ -1,11 +1,14 @@
 import { ChildrenType } from "@/types/types";
+import Header from "@/layout/Header"
 
-const Layout = ({children}: ChildrenType) => {
+const Layout = ({ children }: ChildrenType) => {
   return (
     <>
-      <header>Header</header>
-      <main>{children}</main>
-      <footer>Footer</footer>
+    <Header />
+      <main className="max-w-7xl w-full mx-auto mb-auto">
+        {children}
+      </main>
+      <footer className="max-w-7xl w-full mx-auto">Footer</footer>
     </>
   );
 };
