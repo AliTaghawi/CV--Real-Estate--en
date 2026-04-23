@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const styles = "relative top-1 text-zinc-500 hover:text-zinc-950 transition-colors ease-in";
+const styles = "relative top-1 text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors ease-in";
 
 const Navbar = () => {
   return (
@@ -18,6 +18,9 @@ const Navbar = () => {
       </Link>
       <Link href="/property-files" className={`ms-5 ${styles}`}>
         Properties
+      </Link>
+      <Link href="/Agents" className={styles}>
+        Agents
       </Link>
       <Link href="/about-us" className={styles}>
         About-us
