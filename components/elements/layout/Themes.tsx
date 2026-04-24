@@ -1,26 +1,32 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { MdComputer, MdDarkMode, MdLightMode } from "react-icons/md";
+import { useOutsideClick } from "hooks/useOutsideClick";
 
 const styles = "p-1 px-1.5 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md transition-colors ease-in"
 
 const Themes = () => {
   const [loaded, setLoaded] = useState(false);
   const [show, setShow] = useState(false);
+  const ref = useRef(null)
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     setLoaded(true);
   }, []);
 
+  useOutsideClick(ref, () => {
+    setShow(false);
+  })
+
   const showHandler = () => {
     setShow(!show);
   };
 
   const setMode = (mode: string) => {
-    setTheme(mode)
-    setShow(false)
+    setTheme(mode);
+    setShow(false);
   }
 
   if (!loaded)
@@ -31,7 +37,7 @@ const Themes = () => {
     );
 
   return (
-    <div className="relative">
+    <div ref={ref} className="relative">
       <button
         onClick={showHandler}
         className="text-xl p-1 rounded-md hover:bg-zinc-200/65 dark:hover:bg-zinc-700 transition-colors ease-in"
