@@ -12,7 +12,7 @@ const NotFound = () => {
           <BiError className="text-8xl" />
         </div>
         <h2 className="text-2xl font-semibold">
-          Sorry could "Not Found" requested page
+          Sorry, the requested page was Not Found
         </h2>
         <div className="mt-4 flex items-stretch justify-between">
           <BackButton />
