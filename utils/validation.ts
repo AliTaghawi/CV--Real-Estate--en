@@ -1,12 +1,12 @@
 import Joi from "joi";
 
-const loginSchema = Joi.object({
+const loginValidationSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().min(8).required(),
 });
 
-const registerSchema = loginSchema.append({
+const registerValidationSchema = loginValidationSchema.append({
   confirmPassword: Joi.any().valid(Joi.ref("password")).required(),
 });
 
-export { loginSchema, registerSchema };
+export { loginValidationSchema, registerValidationSchema };
