@@ -22,7 +22,7 @@ enum AuthStatusMessages {
   EMAIL_UNVERIFIED = "Please confirm your email first",
   TOKEN_SENDED = "Verification code has been sent to you",
   RESEND_VERIFICATION_CODE = "Verification code resent",
-  EXPIRED_CODE = "Verification code has expired, please request verification code again",
+  EXPIRED_CODE = "Verification code has been expired, please request verification code again",
   WRONG_VERIFICATION_CODE = "The verification code is incorrect",
   NOT_EXPIRED_CODE = "The previous verification code has not expired yet. Please try again in a few minutes.",
 
