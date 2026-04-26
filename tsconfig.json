@@ -30,6 +30,7 @@
       "@/modules/*": ["components/modules/*"],
       "@/elements/*": ["components/elements/*"],
       "@/api/*": ["app/api/*"],
+      "@/models/*": ["models/*"]
     }
   },
   "include": [
