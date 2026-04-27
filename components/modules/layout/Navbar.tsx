@@ -11,7 +11,7 @@ const Navbar = () => {
           alt="logo"
           className="block size-6 rounded-sm"
         />{" "}
-        <p className="text-2xl font-medium relative top-[3px]">
+        <p className="text-2xl font-medium relative top-0.75">
           <span className="text-cyan-600">R</span>eal{" "}
           <span className="text-cyan-600">E</span>state
         </p>

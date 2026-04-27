@@ -1,6 +1,8 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
+const style = "text-cyan-700 visited:text-cyan-900 dark:text-cyan-400 dark:visited:text-cyan-600"
+
 const Footer = () => {
   return (
     <footer className="w-full p-4.5 xl:px-0 bg-zinc-50/50 dark:bg-zinc-800/50 border-t border-zinc-300 dark:border-zinc-600">
@@ -13,7 +15,7 @@ const Footer = () => {
               href="https://nextjs.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cyan-700 visited:text-cyan-900"
+              className={style}
             >
               Next.js
             </a>
@@ -22,7 +24,7 @@ const Footer = () => {
               href="http://tailwindcss.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cyan-700 visited:text-cyan-900"
+              className={style}
             >
               TailwindCSS
             </a>
@@ -32,7 +34,7 @@ const Footer = () => {
         <span className="w-0.5 bg-zinc-300 "></span>
         <div className="w-full">
           <p>Sayed Ali Taghawi</p>
-          <div className="flex items-center gap-4 mt-4 text-xl text-cyan-700">
+          <div className="flex items-center gap-4 mt-4 text-xl text-cyan-700 dark:text-cyan-500">
             <a
               href="https://github.com/AliTaghawi"
               target="_blank"
