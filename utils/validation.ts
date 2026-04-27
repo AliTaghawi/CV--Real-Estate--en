@@ -19,4 +19,13 @@ const OTPValidationSchema = Joi.object({
   }),
 });
 
-export { loginValidationSchema, registerValidationSchema, OTPValidationSchema };
+const emailValidationSchema = Joi.object({
+  email: Joi.string().email().required()
+})
+
+export { 
+  loginValidationSchema, 
+  registerValidationSchema, 
+  OTPValidationSchema ,
+  emailValidationSchema,
+};

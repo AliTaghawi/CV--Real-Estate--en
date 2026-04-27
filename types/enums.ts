@@ -20,12 +20,11 @@ enum AuthStatusMessages {
   EMAIL_VERIFIED = "Your email has been verified",
   EMAIL_ALREADY_VERIFIED = "User email has already been verified",
   EMAIL_UNVERIFIED = "Please confirm your email first",
-  TOKEN_SENDED = "Verification code has been sent to you",
+  TOKEN_SENDED = "Verification email has been sent to you, Please check your emails",
   RESEND_VERIFICATION_CODE = "Verification code resent",
   EXPIRED_CODE = "Verification code has been expired, please request verification code again",
   WRONG_VERIFICATION_CODE = "The verification code is incorrect",
   NOT_EXPIRED_CODE = "The previous verification code has not expired yet. Please try again in a few minutes.",
-
 }
 
 enum StatusMessages {
