@@ -3,5 +3,27 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --breakpoint-xs: 33rem
+  --breakpoint-xs: 33rem;
+
+  --animate-search-open: searchboxOpen 0.3s linear;
+  --animate-search-close: searchboxClose 0.3s linear;
+
+  @keyframes searchboxOpen {
+    0% {
+      max-width: 0rem;
+    }
+    100% {
+      max-width: 25rem;
+    }
+  }
+  @keyframes searchboxClose {
+    0% {
+      display: flex;
+      max-width: 25rem;
+    }
+    100% {
+      max-width: 0rem;
+      display: none;
+    }
+  }
 }
