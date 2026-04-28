@@ -5,8 +5,8 @@ const style = "text-cyan-700 visited:text-cyan-900 dark:text-cyan-400 dark:visit
 
 const Footer = () => {
   return (
-    <footer className="w-full p-4.5 xl:px-0 bg-zinc-50/50 dark:bg-zinc-800/50 border-t border-zinc-300 dark:border-zinc-600">
-      <div className="max-w-7xl mx-auto flex gap-4">
+    <footer className="w-full p-4.5 xxl:px-0 bg-zinc-50/50 dark:bg-zinc-800/50 border-t border-zinc-300 dark:border-zinc-600">
+      <div className="max-w-8xl mx-auto flex gap-4">
         <div className="w-full text-end">
           <p>FullStack Real State webapp created for CV &copy;</p>
           <div className="mt-4">

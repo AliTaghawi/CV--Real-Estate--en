@@ -37,7 +37,7 @@ const Themes = () => {
     );
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative text-cyan-700 dark:text-cyan-500">
       <button
         onClick={showHandler}
         className="text-xl p-1 rounded-md hover:bg-zinc-200/65 dark:hover:bg-zinc-700 transition-colors ease-in"

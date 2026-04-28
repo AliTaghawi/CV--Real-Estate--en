@@ -4,25 +4,28 @@
 
 @theme {
   --breakpoint-xs: 33rem;
+  --breakpoint-xxl: 89rem;
+  --spacing-8xl: 88rem;
 
   --animate-search-open: searchboxOpen 0.3s linear;
   --animate-search-close: searchboxClose 0.3s linear;
 
   @keyframes searchboxOpen {
     0% {
-      max-width: 0rem;
+      max-width: 0px;
     }
     100% {
-      max-width: 25rem;
+      max-width: 400px;
     }
   }
+
   @keyframes searchboxClose {
     0% {
       display: flex;
-      max-width: 25rem;
+      max-width: 400px;
     }
     100% {
-      max-width: 0rem;
+      max-width: 0px;
       display: none;
     }
   }

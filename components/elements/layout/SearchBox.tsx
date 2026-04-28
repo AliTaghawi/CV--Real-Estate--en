@@ -29,10 +29,10 @@ const SearchBox = () => {
           placeholder="Search in title"
         />
         <button className="text-xl cursor-pointer">
-          <IoMdSearch />
+          <IoMdSearch className="text-cyan-700 dark:text-cyan-500" />
         </button>
       </div>
-      <button onClick={showHandler} className="xs:hidden p-1 hover:bg-zinc-200/65 dark:hover:bg-zinc-700 rounded-md transition-colors ease-in">
+      <button onClick={showHandler} className="xs:hidden p-1 hover:bg-zinc-200/65 dark:hover:bg-zinc-700 rounded-md transition-colors ease-in text-cyan-700 dark:text-cyan-500">
         {show? <span className="text-lg/tight">&#10006;</span> : <IoMdSearch className="text-xl"/>}
       </button>
       {/* <div className={`fixed top-0 left-0 ${show ? "flex" : "hidden"} justify-center items-start w-full p-8 h-screen bg-zinc-50/80 z-10`}>
