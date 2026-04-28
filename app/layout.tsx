@@ -3,6 +3,7 @@ import Vazirmatn from "@/public/fonts/fonts";
 import "./globals.css";
 import Layout from "@/layout/Layout";
 import ModeProvider from "@/providers/ModeProvider";
+import ReduxProvider from "@/providers/ReduxProvider";
 
 export const metadata: Metadata = {
   title: "Real Estate | CV project",
@@ -21,9 +22,11 @@ export default function RootLayout({
       suppressHydrationWarning={true}
     >
       <body className="flex flex-col items-start gap-1 justify-between">
-        <ModeProvider>
-          <Layout>{children}</Layout>
-        </ModeProvider>
+        <ReduxProvider>
+          <ModeProvider>
+            <Layout>{children}</Layout>
+          </ModeProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
