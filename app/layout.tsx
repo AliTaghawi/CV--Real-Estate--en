@@ -17,10 +17,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${Vazirmatn.className} dark:bg-zinc-950 dark:text-zinc-100 h-full`}
+      className={`${Vazirmatn.className} dark:bg-zinc-950 dark:text-zinc-100`}
       suppressHydrationWarning={true}
     >
-      <body className="h-full flex flex-col items-start gap-1 justify-between">
+      <body className="flex flex-col items-start gap-1 justify-between">
         <ModeProvider>
           <Layout>{children}</Layout>
         </ModeProvider>
