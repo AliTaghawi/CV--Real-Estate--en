@@ -7,6 +7,7 @@ import TextPassInput from "@/elements/authPages/TextPassInput";
 import { useDispatch, useSelector } from "react-redux";
 import { setInfo } from "@/redux/features/authInfo/authInfoSlice";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const initialValues = {
   email: "",
@@ -47,7 +48,9 @@ const RegisterPage = () => {
 
     if (res.error) {
       console.log(res.error);
+      toast.error(res.error)
     } else {
+      toast.success(res.message)
       resetForm();
       router.push("/verifyEmail")
     }
@@ -104,7 +107,7 @@ const RegisterPage = () => {
         <button
           type="submit"
           form="loginForm"
-          className="hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-md py-0.5 px-4 text-cyan-600 font-medium transition-colors ease-in outline-0"
+          className="hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-md py-0.5 px-4 text-cyan-600 font-medium transition-colors ease-in"
         >
           Register
         </button>
