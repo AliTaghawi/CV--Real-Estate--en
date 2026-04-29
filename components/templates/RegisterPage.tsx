@@ -1,8 +1,30 @@
 "use client"
 
+import { useFormik } from "formik";
 import Link from "next/link";
+import * as Yup from "yup"
+
+const initialValues = {
+  email: "",
+  password: "",
+  confirmPassword: "",
+}
+
+const validationSchema = Yup.object({
+  email: Yup.string().email().required(),
+  password: Yup.string().min(8).required(),
+  confirmPassword: Yup.string().oneOf([Yup.ref("password")]).required(),
+})
+
+const onSubmit = () => {}
 
 const RegisterPage = () => {
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit
+  })
+  
   return (
     <div className='mx-auto mt-20 w-100 bg-zinc-50 dark:bg-zinc-900 p-4 border border-zinc-300 dark:border-zinc-600 rounded-xl '>
       <h2 className="text-3xl font-bold text-cyan-600 mb-4">Register from</h2>
