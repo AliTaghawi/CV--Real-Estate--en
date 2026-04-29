@@ -1,46 +1,89 @@
-"use client"
+"use client";
 
-import { useFormik } from "formik";
 import Link from "next/link";
-import * as Yup from "yup"
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import TextPassInput from "@/elements/authPages/TextPassInput";
 
 const initialValues = {
   email: "",
   password: "",
   confirmPassword: "",
-}
+};
 
 const validationSchema = Yup.object({
   email: Yup.string().email().required(),
   password: Yup.string().min(8).required(),
-  confirmPassword: Yup.string().oneOf([Yup.ref("password")]).required(),
-})
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password")])
+    .required(),
+});
 
-const onSubmit = () => {}
+const onSubmit = () => {};
 
 const RegisterPage = () => {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit
-  })
-  
+    onSubmit,
+  });
+
   return (
-    <div className='mx-auto mt-20 w-100 bg-zinc-50 dark:bg-zinc-900 p-4 border border-zinc-300 dark:border-zinc-600 rounded-xl '>
+    <div className="mx-auto my-20 max-w-100 bg-zinc-50 dark:bg-zinc-900 p-4 border border-zinc-300 dark:border-zinc-600 rounded-xl ">
       <h2 className="text-3xl font-bold text-cyan-600 mb-4">Register from</h2>
-      <div className="flex flex-col relative mb-5.5">
-        <label htmlFor="" className="ms-1">Email:</label>
-        <input type="email" name="" id="" className="border border-zinc-300 dark:border-zinc-600 focus:border-cyan-700 rounded-md py-1 px-2 bg-white dark:bg-zinc-900 outline-0" placeholder="Your Email" />
-        <span className="text-xs text-red-500 absolute -bottom-4.5 left-1.5">this is a ERROR</span>
-      </div>
+      <form id="loginForm" onSubmit={formik.handleSubmit}>
+        <TextPassInput
+          title="Email"
+          name="email"
+          type="email"
+          placeholder="Email"
+          value={formik.values.email}
+          error={formik.errors.email}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          blur={formik.touched.email}
+        />
+        <TextPassInput
+          title="Password"
+          name="password"
+          type="password"
+          placeholder="Insert strong Password"
+          value={formik.values.password}
+          error={formik.errors.password}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          blur={formik.touched.password}
+        />
+        <TextPassInput
+          title="Confirm password"
+          name="confirmPassword"
+          type="password"
+          placeholder="Repeat your Password"
+          value={formik.values.confirmPassword}
+          error={formik.errors.confirmPassword}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          blur={formik.touched.confirmPassword}
+        />
+      </form>
       <div className="flex items-center justify-between mt-8">
         <div className="text-sm ms-0.5">
           <span>Have an account?</span>
-          <Link href="/login" className="ms-1 text-base font-medium text-cyan-600">login</Link>
+          <Link
+            href="/login"
+            className="ms-1 text-base font-medium text-cyan-600"
+          >
+            login
+          </Link>
         </div>
-        <button className="hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-md py-0.5 px-4 text-cyan-600 font-medium transition-colors ease-in">Register</button>
+        <button
+          type="submit"
+          form="loginForm"
+          className="hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-md py-0.5 px-4 text-cyan-600 font-medium transition-colors ease-in outline-0"
+        >
+          Register
+        </button>
       </div>
-
     </div>
   );
 };
