@@ -4,6 +4,9 @@ import Link from "next/link";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import TextPassInput from "@/elements/authPages/TextPassInput";
+import { useDispatch, useSelector } from "react-redux";
+import { setInfo } from "@/redux/features/authInfo/authInfoSlice";
+import { useRouter } from "next/navigation";
 
 const initialValues = {
   email: "",
@@ -15,18 +18,40 @@ const validationSchema = Yup.object({
   email: Yup.string().email().required(),
   password: Yup.string().min(8).required(),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")])
+    .oneOf([Yup.ref("password")], "confirm password is not match with password")
     .required(),
 });
 
-const onSubmit = () => {};
-
 const RegisterPage = () => {
+  const dispatch = useDispatch();
+  const router = useRouter()
+  
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit,
   });
+
+  async function onSubmit(
+    values: typeof initialValues,
+    { resetForm }: { resetForm: () => void },
+  ) {
+    dispatch(setInfo({ email: values.email, pass: values.password }));
+
+    const result = await fetch("/api/auth/register", {
+      method: "POST",
+      body: JSON.stringify(values),
+      headers: { "content-type": "application/json" },
+    });
+    const res = await result.json();
+
+    if (res.error) {
+      console.log(res.error);
+    } else {
+      resetForm();
+      router.push("/verifyEmail")
+    }
+  }
 
   return (
     <div className="mx-auto my-20 max-w-100 bg-zinc-50 dark:bg-zinc-900 p-4 border border-zinc-300 dark:border-zinc-600 rounded-xl ">
