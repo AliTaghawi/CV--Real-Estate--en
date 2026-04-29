@@ -52,7 +52,7 @@ const RegisterPage = () => {
     } else {
       toast.success(res.message)
       resetForm();
-      router.push("/verifyEmail")
+      router.push("/verify-email")
     }
   }
 
