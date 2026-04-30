@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import { RootState } from "@/redux/store";
 import TextPassInput from "@/elements/authPages/TextPassInput";
 import { GoAlert } from "react-icons/go";
-import { deleteInfo } from "@/redux/features/authInfo/authInfoSlice";
+import { deleteInfo } from "@/redux/features/registerInfo/registerInfoSlice";
 
 const validationSchema = Yup.object({
   OTPCode: Yup.string().length(5).required(),
@@ -18,12 +18,12 @@ const validationSchema = Yup.object({
 
 const VerifyEmailPage = () => {
   const router = useRouter();
-  const authInfo = useSelector((state: RootState) => state.authInfo);
+  const registerInfo = useSelector((state: RootState) => state.registerInfo);
   const dispatch = useDispatch();
 
   const initialValues = {
     OTPCode: "",
-    altEmail: authInfo?.email || "",
+    altEmail: registerInfo?.email || "",
   };
 
   const formik = useFormik({
@@ -37,7 +37,7 @@ const VerifyEmailPage = () => {
     { resetForm }: { resetForm: () => void },
   ) {
     const data = {
-      email: authInfo.email ? authInfo.email : values.altEmail,
+      email: registerInfo.email ? registerInfo.email : values.altEmail,
       OTPCode: values.OTPCode,
     };
 
@@ -52,12 +52,12 @@ const VerifyEmailPage = () => {
     // handling verification response with condition
     if (res.error) {
       toast.error(res.error);
-    } else if (authInfo.email && authInfo.pass) {
+    } else if (registerInfo.email && registerInfo.pass) {
 
       // verification success, login with email and password
       const response = await signIn("credentials", {
-        email: authInfo.email,
-        password: authInfo.pass,
+        email: registerInfo.email,
+        password: registerInfo.pass,
         redirect: false,
       });
 
@@ -88,7 +88,7 @@ const VerifyEmailPage = () => {
         Verify your Email
       </h2>
       <p>We send a verification code to your email.</p>
-      <span className="font-bold">{authInfo.email}</span>
+      <span className="font-bold">{registerInfo.email}</span>
       <p>
         Please enter the code in the text box below and verify your email to
         complete the registration process.
@@ -97,7 +97,7 @@ const VerifyEmailPage = () => {
         Notes! the code expire time is 15 minute from sending time
       </p>
       <form id="verifyForm" onSubmit={formik.handleSubmit}>
-        {authInfo.email ? null : (
+        {registerInfo.email ? null : (
           <div>
             <p className="text-sm mt-4 mb-1 text-red-900">
               <GoAlert className="inline mb-0.75 me-0.5" />

@@ -4,8 +4,8 @@ import Link from "next/link";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import TextPassInput from "@/elements/authPages/TextPassInput";
-import { useDispatch, useSelector } from "react-redux";
-import { setInfo } from "@/redux/features/authInfo/authInfoSlice";
+import { useDispatch } from "react-redux";
+import { setInfo } from "@/redux/features/registerInfo/registerInfoSlice";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 

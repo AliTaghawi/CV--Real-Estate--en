@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import displayReducer from "@/redux/features/display/displaySlice";
-import authInfoReducer from "@/redux/features/authInfo/authInfoSlice";
+import registerInfoReducer from "@/redux/features/registerInfo/registerInfoSlice";
 
 const store = configureStore({
   reducer: {
     display: displayReducer,
-    authInfo: authInfoReducer,
+    registerInfo: registerInfoReducer,
   },
 });
 

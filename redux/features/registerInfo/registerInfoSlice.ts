@@ -5,7 +5,7 @@ const initialState = {
   pass: "",
 };
 
-const authInfoSlice = createSlice({
+const registerInfoSlice = createSlice({
   name: "authInfo",
   initialState,
   reducers: {
@@ -20,6 +20,6 @@ const authInfoSlice = createSlice({
   },
 });
 
-export default authInfoSlice.reducer;
+export default registerInfoSlice.reducer;
 
-export const { setInfo, deleteInfo } = authInfoSlice.actions;
+export const { setInfo, deleteInfo } = registerInfoSlice.actions;
