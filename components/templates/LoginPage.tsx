@@ -1,32 +1,29 @@
 "use client";
 
-import Link from "next/link";
+import { MouseEvent } from "react";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { signIn } from "next-auth/react";
+// import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
 import TextPassInput from "@/elements/authPages/TextPassInput";
-import { setInfo } from "@/redux/features/registerInfo/registerInfoSlice";
+// import { setInfo } from "@/redux/features/registerInfo/registerInfoSlice";
 
 const initialValues = {
   email: "",
   password: "",
-  confirmPassword: "",
 };
 
 const validationSchema = Yup.object({
   email: Yup.string().email().required(),
   password: Yup.string().min(8).required(),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")], "confirm password is not match with password")
-    .required(),
 });
 
-const RegisterPage = () => {
-  const dispatch = useDispatch();
-  const router = useRouter()
-  
+const LoginPage = () => {
+  // const dispatch = useDispatch();
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -37,28 +34,47 @@ const RegisterPage = () => {
     values: typeof initialValues,
     { resetForm }: { resetForm: () => void },
   ) {
-    dispatch(setInfo({ email: values.email }));
-
-    const result = await fetch("/api/auth/register", {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: { "content-type": "application/json" },
+    const res = await signIn("credentials", {
+      ...values,
+      redirect: false,
     });
-    const res = await result.json();
 
-    if (res.error) {
-      console.log(res.error);
-      toast.error(res.error)
-    } else {
-      toast.success(res.message)
+    if (res?.status === 200) {
+      toast.success("You logged in successfully");
       resetForm();
-      router.push("/verify-email")
+      router.push("/");
+    } else {
+      console.log(res?.error);
+      toast.error(res?.error || "error in login");
     }
   }
 
+  const forgetHandler = async (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+  ) => {
+    // if (!formik.errors.email && formik.touched.email) {
+    //   dispatch(setInfo({ email: formik.values.email }));
+    //   const result = await fetch("/api/auth/send-email-otp", {
+    //     method: "POST",
+    //     body: JSON.stringify({ email: formik.values.email }),
+    //     headers: { "content-type": "application/json" },
+    //   });
+    //   const res = await result.json();
+
+    //   if (res.error) {
+    //     toast.error(res.error);
+    //   } else {
+    //     toast.success(res.message);
+    //     router.push(`/verify-email?type=fp&email=${formik.values.email}`);
+    //   }
+    // } else {
+    //   toast.error("Enter your email");
+    // }
+  };
+
   return (
     <div className="mx-auto my-20 max-w-100 bg-zinc-50 dark:bg-zinc-900 p-4 border border-zinc-300 dark:border-zinc-600 rounded-xl ">
-      <h2 className="text-3xl font-bold text-cyan-600 mb-4">Register form</h2>
+      <h2 className="text-3xl font-bold text-cyan-600 mb-4">LogIn form</h2>
       <form id="loginForm" onSubmit={formik.handleSubmit}>
         <TextPassInput
           title="Email"
@@ -75,45 +91,33 @@ const RegisterPage = () => {
           title="Password"
           name="password"
           type="password"
-          placeholder="Enter strong Password"
+          placeholder="Enter your password"
           value={formik.values.password}
           error={formik.errors.password}
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
           blur={formik.touched.password}
         />
-        <TextPassInput
-          title="Confirm password"
-          name="confirmPassword"
-          type="password"
-          placeholder="Repeat your Password"
-          value={formik.values.confirmPassword}
-          error={formik.errors.confirmPassword}
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          blur={formik.touched.confirmPassword}
-        />
       </form>
-      <div className="flex items-center justify-between mt-8">
+      <div className="flex items-center justify-between">
         <div className="text-sm ms-0.5">
-          <span>Have an account?</span>
-          <Link
-            href="/login"
-            className="ms-1 text-base font-medium text-cyan-600 hover:underline"
+          <button
+            onClick={forgetHandler}
+            className="ms-1 font-medium text-cyan-600 cursor-pointer hover:underline"
           >
-            login
-          </Link>
+            forget password
+          </button>
         </div>
         <button
           type="submit"
           form="loginForm"
           className="hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-md py-0.5 px-4 text-cyan-600 font-medium transition-colors ease-in"
         >
-          Register
+          LogIn
         </button>
       </div>
     </div>
   );
 };
 
-export default RegisterPage;
+export default LoginPage;
