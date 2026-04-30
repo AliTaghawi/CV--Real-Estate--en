@@ -23,7 +23,7 @@ const VerifyEmailPage = () => {
 
   const initialValues = {
     OTPCode: "",
-    altEmail: registerInfo?.email || "",
+    altEmail: registerInfo.email || "",
   };
 
   const formik = useFormik({
@@ -41,44 +41,37 @@ const VerifyEmailPage = () => {
       OTPCode: values.OTPCode,
     };
 
-    // verifying email
-    const result = await fetch("/api/auth/verify-email-otp", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "content-type": "application/json" },
+    //login and verify email
+    const response = await signIn("credentials", {
+      ...data,
+      redirect: false,
     });
-    const res = await result.json();
+    console.log("login:", response)
 
-    // handling verification response with condition
-    if (res.error) {
-      toast.error(res.error);
-    } else if (registerInfo.email && registerInfo.pass) {
-
-      // verification success, login with email and password
-      const response = await signIn("credentials", {
-        email: registerInfo.email,
-        password: registerInfo.pass,
-        redirect: false,
+    // if success show success message
+    if (response?.status === 200) {
+      toast.success("Your email is verified and you'r logged in");
+      resetForm();
+      dispatch(deleteInfo());
+      router.replace("/");
+    } else {
+      // if login failed just verifying email
+      const result = await fetch("/api/auth/verify-email-otp", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "content-type": "application/json" },
       });
-
-      // show message and act base on login response
-      if (response?.status === 200) {
-        toast.success("Your email is verified and you'r logged in");
-        resetForm();
-        dispatch(deleteInfo());
-        router.replace("/");
+      const res = await result.json();
+      
+      // handling verification response with condition
+      if (res.error) {
+        toast.error(res.error);
       } else {
         toast.error("Your email is verified, but something went wrong in login process try login again!");
         resetForm();
         dispatch(deleteInfo());
         router.push("/login");
       }
-    } else {
-      // verification success,
-      toast.success(res.message);
-      resetForm();
-      dispatch(deleteInfo());
-      router.push("/login");
     }
   }
 
