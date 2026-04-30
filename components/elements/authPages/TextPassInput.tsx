@@ -19,9 +19,11 @@ const TextPassInput = ({
 
   return (
     <div className="flex flex-col relative mb-5.5">
-      <label htmlFor={name} className="ms-1">
-        {title}:
-      </label>
+      {title && (
+        <label htmlFor={name} className="ms-1">
+          {title}:
+        </label>
+      )}
       <input
         type={type === "password" && show ? "text" : type}
         name={name}

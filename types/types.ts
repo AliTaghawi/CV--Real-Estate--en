@@ -5,12 +5,12 @@ export type ChildrenType = Readonly<{
 }>;
 
 export type TextPassInputType = {
-  title: string;
+  title?: string | null;
   name: string;
   type: string;
   value: string;
   onChange: (e: ChangeEvent<any>) => void;
-  onBlur: (e: FocusEvent<any>) => void;
+  onBlur?: (e: FocusEvent<any>) => void;
   error?: string;
   blur?: boolean;
   placeholder?: string;
