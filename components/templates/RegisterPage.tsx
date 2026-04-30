@@ -37,7 +37,7 @@ const RegisterPage = () => {
     values: typeof initialValues,
     { resetForm }: { resetForm: () => void },
   ) {
-    dispatch(setInfo({ email: values.email, pass: values.password }));
+    dispatch(setInfo({ email: values.email }));
 
     const result = await fetch("/api/auth/register", {
       method: "POST",
