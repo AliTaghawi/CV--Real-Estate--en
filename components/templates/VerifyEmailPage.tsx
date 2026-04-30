@@ -1,16 +1,15 @@
 "use client";
 
-import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import toast from "react-hot-toast";
 import { RootState } from "@/redux/store";
 import TextPassInput from "@/elements/authPages/TextPassInput";
 import { GoAlert } from "react-icons/go";
-
-const initialValues = {
-  OTPCode: "",
-  altEmail: "",
-};
+import { deleteInfo } from "@/redux/features/authInfo/authInfoSlice";
 
 const validationSchema = Yup.object({
   OTPCode: Yup.string().length(5).required(),
@@ -18,7 +17,14 @@ const validationSchema = Yup.object({
 });
 
 const VerifyEmailPage = () => {
+  const router = useRouter();
   const authInfo = useSelector((state: RootState) => state.authInfo);
+  const dispatch = useDispatch();
+
+  const initialValues = {
+    OTPCode: "",
+    altEmail: authInfo?.email || "",
+  };
 
   const formik = useFormik({
     initialValues,
@@ -27,9 +33,54 @@ const VerifyEmailPage = () => {
   });
 
   async function onSubmit(
-    values: any,
+    values: typeof initialValues,
     { resetForm }: { resetForm: () => void },
-  ) {}
+  ) {
+    const data = {
+      email: authInfo.email ? authInfo.email : values.altEmail,
+      OTPCode: values.OTPCode,
+    };
+
+    // verifying email
+    const result = await fetch("/api/auth/verify-email-otp", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "content-type": "application/json" },
+    });
+    const res = await result.json();
+
+    // handling verification response with condition
+    if (res.error) {
+      toast.error(res.error);
+    } else if (authInfo.email && authInfo.pass) {
+
+      // verification success, login with email and password
+      const response = await signIn("credentials", {
+        email: authInfo.email,
+        password: authInfo.pass,
+        redirect: false,
+      });
+
+      // show message and act base on login response
+      if (response?.status === 200) {
+        toast.success("Your email is verified and you'r logged in");
+        resetForm();
+        dispatch(deleteInfo());
+        router.replace("/");
+      } else {
+        toast.error("Your email is verified, but something went wrong in login process try login again!");
+        resetForm();
+        dispatch(deleteInfo());
+        router.push("/login");
+      }
+    } else {
+      // verification success,
+      toast.success(res.message);
+      resetForm();
+      dispatch(deleteInfo());
+      router.push("/login");
+    }
+  }
 
   return (
     <div className="mx-auto my-10 max-w-100 bg-zinc-50 dark:bg-zinc-900 p-4 border border-zinc-300 dark:border-zinc-600 rounded-xl ">
@@ -37,7 +88,7 @@ const VerifyEmailPage = () => {
         Verify your Email
       </h2>
       <p>We send a verification code to your email.</p>
-      <span className="font-bold">{authInfo.email} text@email.com</span>
+      <span className="font-bold">{authInfo.email}</span>
       <p>
         Please enter the code in the text box below and verify your email to
         complete the registration process.
@@ -45,7 +96,7 @@ const VerifyEmailPage = () => {
       <p className="font-medium my-2 mb-4">
         Notes! the code expire time is 15 minute from sending time
       </p>
-      <form>
+      <form id="verifyForm" onSubmit={formik.handleSubmit}>
         {authInfo.email ? null : (
           <div>
             <p className="text-sm mt-4 mb-1 text-red-900">
@@ -55,7 +106,7 @@ const VerifyEmailPage = () => {
             </p>
             <TextPassInput
               title="Email"
-              name="email"
+              name="altEmail"
               type="email"
               value={formik.values.altEmail}
               onChange={formik.handleChange}
@@ -80,6 +131,7 @@ const VerifyEmailPage = () => {
           />
           <button
             type="submit"
+            form="verifyForm"
             className="hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-md py-0.5 px-4 text-cyan-600 font-medium transition-colors ease-in"
           >
             Verify

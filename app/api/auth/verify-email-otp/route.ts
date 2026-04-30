@@ -13,9 +13,9 @@ export async function POST(req: NextRequest) {
     try {
       await OTPValidationSchema.validateAsync({ email, OTPCode });
     } catch (error: any) {
-      console.log(error.details[0]);
+      // console.log(error.details[0]);
       return NextResponse.json(
-        { error: StatusMessages.INVALID_DATA },
+        { error: error.details[0].message },
         { status: StatusCodes.UNPROCESSABLE_ENTITY },
       );
     }

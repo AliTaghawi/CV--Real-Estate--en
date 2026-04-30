@@ -14,7 +14,8 @@ const authInfoSlice = createSlice({
       state.pass = action.payload.pass || "";
     },
     deleteInfo: (state) => {
-      state = initialState;
+      state.email = "";
+      state.pass = "";
     },
   },
 });
