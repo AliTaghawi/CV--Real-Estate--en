@@ -2,12 +2,10 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
 import TextPassInput from "@/elements/authPages/TextPassInput";
-import { setInfo } from "@/redux/features/registerInfo/registerInfoSlice";
 
 const initialValues = {
   email: "",
@@ -24,7 +22,6 @@ const validationSchema = Yup.object({
 });
 
 const RegisterPage = () => {
-  const dispatch = useDispatch();
   const router = useRouter()
   
   const formik = useFormik({
@@ -37,7 +34,6 @@ const RegisterPage = () => {
     values: typeof initialValues,
     { resetForm }: { resetForm: () => void },
   ) {
-    dispatch(setInfo({ email: values.email }));
 
     const result = await fetch("/api/auth/register", {
       method: "POST",

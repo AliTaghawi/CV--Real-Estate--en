@@ -2,14 +2,10 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
-import { RootState } from "@/redux/store";
 import TextPassInput from "@/elements/authPages/TextPassInput";
-import { GoAlert } from "react-icons/go";
-import { deleteInfo } from "@/redux/features/registerInfo/registerInfoSlice";
 import { MouseEvent } from "react";
 
 const validationSchema = Yup.object({

@@ -3,13 +3,11 @@
 import { MouseEvent } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-// import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
 import TextPassInput from "@/elements/authPages/TextPassInput";
 import Link from "next/link";
-// import { setInfo } from "@/redux/features/registerInfo/registerInfoSlice";
 
 const initialValues = {
   email: "",
@@ -22,7 +20,6 @@ const validationSchema = Yup.object({
 });
 
 const LoginPage = () => {
-  // const dispatch = useDispatch();
   const router = useRouter();
 
   const formik = useFormik({
@@ -54,7 +51,6 @@ const LoginPage = () => {
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) => {
     // if (!formik.errors.email && formik.touched.email) {
-    //   dispatch(setInfo({ email: formik.values.email }));
     //   const result = await fetch("/api/auth/send-email-otp", {
     //     method: "POST",
     //     body: JSON.stringify({ email: formik.values.email }),
