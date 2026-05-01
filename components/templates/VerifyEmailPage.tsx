@@ -10,6 +10,7 @@ import { RootState } from "@/redux/store";
 import TextPassInput from "@/elements/authPages/TextPassInput";
 import { GoAlert } from "react-icons/go";
 import { deleteInfo } from "@/redux/features/registerInfo/registerInfoSlice";
+import { MouseEvent } from "react";
 
 const validationSchema = Yup.object({
   OTPCode: Yup.string().length(5).required(),
@@ -46,7 +47,7 @@ const VerifyEmailPage = () => {
       ...data,
       redirect: false,
     });
-    console.log("login:", response)
+    console.log("login:", response);
 
     // if success show success message
     if (response?.status === 200) {
@@ -62,18 +63,34 @@ const VerifyEmailPage = () => {
         headers: { "content-type": "application/json" },
       });
       const res = await result.json();
-      
+
       // handling verification response with condition
       if (res.error) {
         toast.error(res.error);
       } else {
-        toast.error("Your email is verified, but something went wrong in login process try login again!");
+        toast.error( "Your email is verified, but something went wrong in login process try login again!");
         resetForm();
         dispatch(deleteInfo());
         router.push("/login");
       }
     }
   }
+
+  const resendHandler = async (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+  ) => {
+    const result = await fetch("/api/auth/send-email-otp", {
+      method: "POST",
+      body: JSON.stringify({ email: registerInfo.email ? registerInfo.email : formik.values.altEmail }),
+      headers: { "content-type": "application/json" },
+    });
+    const res = await result.json();
+    if (res.error) {
+      toast.error(res.error);
+    } else {
+      toast.success(res.message);
+    }
+  };
 
   return (
     <div className="mx-auto my-10 max-w-100 bg-zinc-50 dark:bg-zinc-900 p-4 border border-zinc-300 dark:border-zinc-600 rounded-xl ">
@@ -92,7 +109,7 @@ const VerifyEmailPage = () => {
       <form id="verifyForm" onSubmit={formik.handleSubmit}>
         {registerInfo.email ? null : (
           <div>
-            <p className="text-sm mt-4 mb-1 text-red-900">
+            <p className="text-sm mt-4 mb-1 text-red-900 dark:text-red-800">
               <GoAlert className="inline mb-0.75 me-0.5" />
               Your email is not available for verification, please enter your
               email as well.
@@ -110,18 +127,25 @@ const VerifyEmailPage = () => {
             />
           </div>
         )}
+        <TextPassInput
+          title="Code"
+          name="OTPCode"
+          type="text"
+          value={formik.values.OTPCode}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.OTPCode}
+          blur={formik.touched.OTPCode}
+          placeholder="Verification code"
+        />
         <div className="flex items-center justify-between">
-          <TextPassInput
-            title="Code"
-            name="OTPCode"
-            type="text"
-            value={formik.values.OTPCode}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.errors.OTPCode}
-            blur={formik.touched.OTPCode}
-            placeholder="Verification code"
-          />
+          <button
+            type="button"
+            onClick={resendHandler}
+            className="hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-md py-0.5 px-4 text-cyan-600 font-medium transition-colors ease-in"
+          >
+            Resend code
+          </button>
           <button
             type="submit"
             form="verifyForm"

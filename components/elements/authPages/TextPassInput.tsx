@@ -18,7 +18,7 @@ const TextPassInput = ({
   const [show, setShow] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-col relative mb-5.5">
+    <div className="flex flex-col relative mt-1 mb-4.5">
       {title && (
         <label htmlFor={name} className="ms-1">
           {title}:
@@ -28,7 +28,7 @@ const TextPassInput = ({
         type={type === "password" && show ? "text" : type}
         name={name}
         id={name}
-        className={`border ${error && blur ? "border-red-500" : "border-zinc-300"} dark:border-zinc-600 focus:border-cyan-700 rounded-md py-1 px-2 bg-white dark:bg-zinc-900 outline-0 ${type === "password" && "pe-7"}`}
+        className={`border ${error && blur ? "border-red-500 dark:border-red-800" : "border-zinc-300 dark:border-zinc-600"} focus:border-cyan-700 rounded-md py-1 px-2 bg-white dark:bg-zinc-900 outline-0 ${type === "password" && "pe-7"}`}
         placeholder={placeholder ?? ""}
         value={value}
         onBlur={onBlur}
@@ -44,7 +44,7 @@ const TextPassInput = ({
         </button>
       )}
       {error && blur && (
-        <span className="text-xs text-red-500 absolute -bottom-4.5 left-1.5">
+        <span className="text-xs text-red-500 dark:text-red-700 absolute -bottom-4.5 left-1.5">
           {error}
         </span>
       )}

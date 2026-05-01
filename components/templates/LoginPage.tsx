@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
 import TextPassInput from "@/elements/authPages/TextPassInput";
+import Link from "next/link";
 // import { setInfo } from "@/redux/features/registerInfo/registerInfoSlice";
 
 const initialValues = {
@@ -60,7 +61,6 @@ const LoginPage = () => {
     //     headers: { "content-type": "application/json" },
     //   });
     //   const res = await result.json();
-
     //   if (res.error) {
     //     toast.error(res.error);
     //   } else {
@@ -99,8 +99,17 @@ const LoginPage = () => {
           blur={formik.touched.password}
         />
       </form>
-      <div className="flex items-center justify-between">
-        <div className="text-sm ms-0.5">
+      <div className="flex flex-col items-end">
+        <div className="w-full flex items-center justify-between text-sm ms-0.5">
+          <div className="flex">
+            <p>Don't have an account?</p>
+            <Link
+              href="/register"
+              className="text-cyan-600 font-medium hover:underline ms-1"
+            >
+              Register
+            </Link>
+          </div>
           <button
             onClick={forgetHandler}
             className="ms-1 font-medium text-cyan-600 cursor-pointer hover:underline"
@@ -111,7 +120,7 @@ const LoginPage = () => {
         <button
           type="submit"
           form="loginForm"
-          className="hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-md py-0.5 px-4 text-cyan-600 font-medium transition-colors ease-in"
+          className="hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-md py-0.5 px-4 text-cyan-600 font-medium transition-colors ease-in mt-3 mb-1"
         >
           LogIn
         </button>
