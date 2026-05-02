@@ -23,9 +23,19 @@ const emailValidationSchema = Joi.object({
   email: Joi.string().email().required()
 })
 
+const forgetPasswordValidationSchema = Joi.object({
+  email: Joi.string().email().required(),
+  OTPCode: Joi.string().regex(/^[0-9]+$/).length(codeLength).required().messages({
+    "string.pattern.base": "The verification code must only be numbers"
+  }),
+  password: Joi.string().min(8).required(),
+  confirmPassword: Joi.any().valid(Joi.ref("password")).required(),
+})
+
 export { 
   loginValidationSchema, 
   registerValidationSchema, 
   OTPValidationSchema ,
   emailValidationSchema,
+  forgetPasswordValidationSchema,
 };
