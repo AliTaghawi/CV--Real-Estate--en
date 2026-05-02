@@ -25,6 +25,7 @@ enum AuthStatusMessages {
   EXPIRED_CODE = "Verification code has been expired, please request verification code again",
   WRONG_VERIFICATION_CODE = "The verification code is incorrect",
   NOT_EXPIRED_CODE = "The previous verification code has not expired yet. Please try again in a few minutes.",
+  TOKEN_NOT_EXIST = "There is no code that was sended"
 }
 
 enum StatusMessages {
