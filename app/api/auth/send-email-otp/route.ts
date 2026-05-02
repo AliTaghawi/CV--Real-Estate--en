@@ -43,7 +43,8 @@ export async function POST(req: NextRequest) {
     
     const emailOTPToken = generateVerificationCode();
     const emailOTPTokenExpiry = new Date();
-    emailOTPTokenExpiry?.setMinutes(emailOTPTokenExpiry.getMinutes() + (type === "Login" ? 5 : 15));
+    const expiryTime = type == "login" ? 5 : 15
+    emailOTPTokenExpiry?.setMinutes(emailOTPTokenExpiry.getMinutes() + expiryTime);
 
     user.emailOTPToken = emailOTPToken;
     user.emailOTPTokenExpiry = emailOTPTokenExpiry;
