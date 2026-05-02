@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
         { status: StatusCodes.BAD_REQUEST },
       );
     } else {
-      const expiryTime = user.emailOTPTokenExpiry.getTime() || 0;
+      const expiryTime = user.emailOTPTokenExpiry?.getTime() || 0;
       const now = new Date().getTime();
       if (expiryTime < now) {
         return NextResponse.json(
@@ -61,6 +61,7 @@ export async function POST(req: NextRequest) {
       { status: StatusCodes.OK },
     );
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       { error: StatusMessages.SERVER_ERROR },
       { status: StatusCodes.SERVER_ERROR },

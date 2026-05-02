@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
 
         //check if email is verified
         if (!user.emailVerified && OTPCode) {
-          const expiryTime = user.emailOTPTokenExpiry.getTime() || 0;
+          const expiryTime = user.emailOTPTokenExpiry?.getTime() || 0;
           const now = new Date().getTime();
           if (expiryTime < now) {
             throw new Error(AuthStatusMessages.EXPIRED_CODE);
