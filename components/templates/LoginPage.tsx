@@ -50,7 +50,8 @@ const LoginPage = () => {
   const forgetHandler = async (
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) => {
-    // if (!formik.errors.email && formik.touched.email) {
+    if (!formik.errors.email && formik.touched.email) {
+      router.push(`/verify-email?email=${formik.values.email}`);
     //   const result = await fetch("/api/auth/send-email-otp", {
     //     method: "POST",
     //     body: JSON.stringify({ email: formik.values.email }),
@@ -65,7 +66,7 @@ const LoginPage = () => {
     //   }
     // } else {
     //   toast.error("Enter your email");
-    // }
+    }
   };
 
   return (
