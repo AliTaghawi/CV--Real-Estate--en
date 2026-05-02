@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (user.emailVerified) {
+    if (!user.emailVerified) {
       return NextResponse.json(
         { error: AuthStatusMessages.EMAIL_UNVERIFIED },
         { status: StatusCodes.BAD_REQUEST },
@@ -65,6 +65,8 @@ export async function POST(req: NextRequest) {
 
     const hashedPassword = await hashPassword(password);
     user.password = hashedPassword;
+    user.emailOTPToken = null;
+    user.emailOTPTokenExpiry = null;
     user.save();
 
     return NextResponse.json(

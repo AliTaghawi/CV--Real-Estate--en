@@ -42,7 +42,6 @@ const VerifyEmailPage = () => {
       ...data,
       redirect: false,
     });
-    console.log("login:", response);
 
     // if success show success message
     if (response?.status === 200) {

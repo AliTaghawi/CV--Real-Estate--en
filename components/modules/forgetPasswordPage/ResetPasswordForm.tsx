@@ -1,7 +1,10 @@
-import TextPassInput from "@/elements/authPages/TextPassInput";
-import { useFormik } from "formik";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { useFormik } from "formik";
 import * as Yup from "yup";
+import toast from "react-hot-toast";
+import TextPassInput from "@/elements/authPages/TextPassInput";
 
 type propsType = {
   email: string | null;
@@ -21,16 +24,40 @@ const validationSchema = Yup.object({
 });
 
 const ResetPasswordForm = ({ email, OTPCode }: propsType) => {
+  const router = useRouter();
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit,
   });
 
-  async function onSubmit(
-    values: typeof initialValues,
-    { resetForm }: { resetForm: () => void },
-  ) {}
+  async function onSubmit(values: typeof initialValues) {
+    const data = { ...values, email, OTPCode };
+    const result = await fetch("/api/auth/forget-password/reset-password", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "content-type": "application/json" },
+    });
+    const res = await result.json();
+    if (res.error) {
+      toast.error(res.error);
+    } else {
+      console.log(res)
+      const response = await signIn("credentials", {
+        email,
+        password: values.password,
+        redirect: false,
+      });
+      console.log(response)
+      if (response?.status == 200) {
+        toast.success(res.message);
+        router.replace("/");
+      } else {
+        toast.error("Your password updated successfully, but we could not log you in, try to login again");
+        router.replace("/login");
+      }
+    }
+  }
 
   return (
     <div className="mx-auto my-20 max-w-100 bg-zinc-50 dark:bg-zinc-900 p-4 border border-zinc-300 dark:border-zinc-600 rounded-xl ">
