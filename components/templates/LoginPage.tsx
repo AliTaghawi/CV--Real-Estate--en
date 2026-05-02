@@ -51,21 +51,20 @@ const LoginPage = () => {
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) => {
     if (!formik.errors.email && formik.touched.email) {
-      router.push(`/verify-email?email=${formik.values.email}`);
-    //   const result = await fetch("/api/auth/send-email-otp", {
-    //     method: "POST",
-    //     body: JSON.stringify({ email: formik.values.email }),
-    //     headers: { "content-type": "application/json" },
-    //   });
-    //   const res = await result.json();
-    //   if (res.error) {
-    //     toast.error(res.error);
-    //   } else {
-    //     toast.success(res.message);
-    //     router.push(`/verify-email?type=fp&email=${formik.values.email}`);
-    //   }
-    // } else {
-    //   toast.error("Enter your email");
+      const result = await fetch("/api/auth/send-email-otp", {
+        method: "POST",
+        body: JSON.stringify({ email: formik.values.email, type: "login" }),
+        headers: { "content-type": "application/json" },
+      });
+      const res = await result.json();
+      if (res.error) {
+        toast.error(res.error);
+      } else {
+        toast.success(res.message);
+        router.push(`/forget-password?email=${formik.values.email}`);
+      }
+    } else {
+      toast.error("Enter your email");
     }
   };
 
@@ -97,7 +96,7 @@ const LoginPage = () => {
         />
       </form>
       <div className="flex flex-col items-end">
-        <div className="w-full flex items-center justify-between text-sm ms-0.5">
+        <div className="w-full flex flex-wrap items-center justify-between gap-2 text-sm ms-0.5">
           <div className="flex">
             <p>Don't have an account?</p>
             <Link
@@ -111,7 +110,7 @@ const LoginPage = () => {
             onClick={forgetHandler}
             className="ms-1 font-medium text-cyan-600 cursor-pointer hover:underline"
           >
-            forget password
+            I forgot my password
           </button>
         </div>
         <button

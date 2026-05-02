@@ -40,7 +40,7 @@ const VerifyOTPForm = ({email, setIsVerified, setOTPCode}: propsType) => {
         Please enter the code in the text box below and verify it is you to login and reset password 
       </p>
       <p className="font-medium my-2 mb-4">
-        Notes! the code expire time is 15 minute from sending time
+        Notes! the code expire time is 5 minute from sending time
       </p>
       <form id="verifyForm">
         <TextPassInput
