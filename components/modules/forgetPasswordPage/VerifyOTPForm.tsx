@@ -31,14 +31,12 @@ const VerifyOTPForm = ({ email, setIsVerified, setOTPCode }: propsType) => {
     { resetForm }: { resetForm: () => void },
   ) {
     const data = { ...values, email };
-    console.log(data)
     const result = await fetch("/api/auth/forget-password/verify-otp", {
       method: "POST",
       body: JSON.stringify(data),
       headers: { "content-type": "application/json" },
     });
     const res = await result.json();
-    console.log(res)
     if (res.error) {
       toast.error(res.error);
     } else {

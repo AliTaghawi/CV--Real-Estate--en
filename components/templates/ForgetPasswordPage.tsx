@@ -1,8 +1,9 @@
 "use client";
 
-import VerifyOTPForm from "@/modules/forgetPasswordPage/VerifyOTPForm";
-import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import ResetPasswordForm from "@/modules/forgetPasswordPage/ResetPasswordForm";
+import VerifyOTPForm from "@/modules/forgetPasswordPage/VerifyOTPForm";
 
 const ForgetPasswordPage = () => {
   const [isVerified, setIsVerified] = useState<boolean>(false);
@@ -12,7 +13,15 @@ const ForgetPasswordPage = () => {
 
   return (
     <>
-    {!isVerified && <VerifyOTPForm email={email} setIsVerified={setIsVerified} setOTPCode={setOTPCode} />}
+      {isVerified ? (
+        <ResetPasswordForm email={email} OTPCode={OTPCode} />
+      ) : (
+        <VerifyOTPForm
+          email={email}
+          setIsVerified={setIsVerified}
+          setOTPCode={setOTPCode}
+        />
+      )}
     </>
   );
 };
