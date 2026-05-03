@@ -4,6 +4,7 @@ import "./globals.css";
 import Layout from "@/layout/Layout";
 import ModeProvider from "@/providers/ModeProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
+import NextAuthProvider from "@/providers/NextAuthProvider";
 
 export const metadata: Metadata = {
   title: "Real Estate | CV project",
@@ -22,11 +23,13 @@ export default function RootLayout({
       suppressHydrationWarning={true}
     >
       <body className="flex flex-col items-start gap-1 justify-between">
-        <ReduxProvider>
-          <ModeProvider>
-            <Layout>{children}</Layout>
-          </ModeProvider>
-        </ReduxProvider>
+        <NextAuthProvider>
+          <ReduxProvider>
+            <ModeProvider>
+              <Layout>{children}</Layout>
+            </ModeProvider>
+          </ReduxProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
